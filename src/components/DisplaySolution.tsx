@@ -10,30 +10,28 @@ type CellData = {
 }
 const size = 20;
 
-function DisplaySolution({ cellsData }: { cellsData: CellData[] }) {
+function DisplaySolution({ cellsData, rows, columns }: { cellsData: CellData[], rows: number, columns: number }) {
 
     const solution = "FFFFF FFFFF FFFFF FFFFF FFFFF"
-    const rows = solution.split(" ").length;
-    const columns = solution.split(" ")[0].length;
+
     const solutionArray = Array.from(solution.replace(/ /g, ""))
     const maxHeight = 500
     const maxWidth = 750
-    console.log(solutionArray)
-    const style = {
-        display: 'grid',
-        gridAutoColumns: "max-content",
-        gap: 0,
-        gridAutoRows: "max-content",
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
-        maxHeight: maxHeight,
-        maxWidth: maxWidth
-    };
+    console.log("HERE", rows, columns)
+    // const style = {
+    //     display: 'grid',
+    //     // gridAutoColumns: "max-content",
+    //     gap: 0,
+    //     // gridAutoRows: "max-content",
+    //     gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    //     gridTemplateRows: `repeat(${rows}, 1fr)`,
+
+    // };
 
 
 
     return (
-        <div style={style}><Canvas cellsData={cellsData} holeColor='yellow' /></div>
+        <div style={{ padding: "1rem" }}><Canvas cellsData={cellsData} holeColor='yellow' handleCellClick={(e) => console.log("nothing")} columns={columns} rows={rows} /></div >
     )
 }
 

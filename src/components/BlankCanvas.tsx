@@ -4,10 +4,11 @@ type Props = {
     rows: number,
     columns: number,
     colorForHoles: string,
-    cellSize: number
+    cellSize: number,
+    handleCellClick: (index: number) => void
 }
 
-function BlankCanvas({ rows, columns, colorForHoles, cellSize }: Props) {
+function BlankCanvas({ rows, columns, colorForHoles, cellSize, handleCellClick }: Props) {
     //dummy data for Cells
 
     const maxHeight = 500
@@ -25,7 +26,7 @@ function BlankCanvas({ rows, columns, colorForHoles, cellSize }: Props) {
     return (
         <div style={{ display: "flex", marginTop: "1rem" }}>
             <div style={style}>
-                {Array.from(Array(rows * columns).keys()).map((index) => { return <Cell holeColor="black" size={cellSize} bgcolor={"white"} isRemovedForHole={false} index={index} letter={""} /> })}
+                {Array.from(Array(rows * columns).keys()).map((index) => { return <Cell holeColor="black" size={cellSize} bgcolor={"white"} isRemovedForHole={false} index={index} letter={""} handleCellClick={handleCellClick} /> })}
                 {/* {cellsData.map((cellData) => { return <Cell size={maxHeight / rows} bgcolor={cellData.bgcolor} isRemovedForHole={cellData.isRemovedForHole} index={cellData.index} letter={cellData.letter} /> })} */}
             </div>
         </div>
