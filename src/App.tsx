@@ -101,8 +101,7 @@ function App() {
     })
 
     console.log("TOTAL RESULT IS", total_result)
-
-    setResult(total_result)
+    // setResult(total_result)
     setResults([total_result, total_result])
     setTime(result.time)
     // update state with response
@@ -139,7 +138,7 @@ function App() {
       <LoadConfiguration onClick={handleLoadConfiguration} />
       <SolveButton onClick={(e) => sendRequest()} />
       <br />
-      <span style={{ fontSize: "1.4rem" }}>{time && "Found Solution in time: " + time + "ms"}</span>
+      <span style={{ fontSize: "1.4rem" }}>{time && "Found Solution" + `${multipleResults.length > 1 ? "s" : ""}` + " in time: " + time + "ms"}</span>
       <br />
       {multipleResults.map((result, index) => {
         return <DisplaySolution cellsData={result} columns={columns} rows={rows} key={index} />
