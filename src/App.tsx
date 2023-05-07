@@ -28,6 +28,7 @@ function App() {
   const [letterList, setLetterList] = useState<string[]>([])
   const [holes, setHoles] = useState<number[]>([])
   const [result, setResult] = useState<CellData[]>([])
+  const [multipleResults, setResults] = useState<CellData[][]>([])
   const [time, setTime] = useState<string>("")
   const [isRotated, setIsRotated] = useState<boolean>(false)
   const handleCellClick = (index: number) => {
@@ -102,6 +103,7 @@ function App() {
     console.log("TOTAL RESULT IS", total_result)
 
     setResult(total_result)
+    setResults([total_result, total_result])
     setTime(result.time)
     // update state with response
 
@@ -139,6 +141,9 @@ function App() {
       <br />
       <span style={{ fontSize: "1.4rem" }}>{time && "Found Solution in time: " + time + "ms"}</span>
       <br />
+      {multipleResults.map((result, index) => {
+        return <DisplaySolution cellsData={result} columns={columns} rows={rows} key={index} />
+      })}
       <DisplaySolution cellsData={result} columns={columns} rows={rows} />
       <br />
       <DownloadSolution results={result} />
