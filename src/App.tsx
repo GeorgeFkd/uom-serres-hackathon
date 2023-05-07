@@ -118,7 +118,7 @@ function App() {
 
     // console.log("response", response)
     const resultOfSolution = await response.json()
-    const dummy = "FFLLΙ YFFLΙ ΥFTLΙ ΥΥTLΙ ΥΤΤΤΙ"
+    const dummy = "FFLLI YFFLI ΥFTLI ΥΥTLI ΥΤΤΤI"
     //convert this to cell data
     const total_result = Array.from(dummy.replace(/ /g, "")).map((letter, index) => {
       return {

@@ -14,19 +14,8 @@ function DisplaySolution({ cellsData, rows, columns }: { cellsData: CellData[], 
 
     const solution = "FFFFF FFFFF FFFFF FFFFF FFFFF"
 
-    const solutionArray = Array.from(solution.replace(/ /g, ""))
-    const maxHeight = 500
-    const maxWidth = 750
     console.log("HERE", rows, columns)
-    // const style = {
-    //     display: 'grid',
-    //     // gridAutoColumns: "max-content",
-    //     gap: 0,
-    //     // gridAutoRows: "max-content",
-    //     gridTemplateColumns: `repeat(${columns}, 1fr)`,
-    //     gridTemplateRows: `repeat(${rows}, 1fr)`,
 
-    // };
 
 
 

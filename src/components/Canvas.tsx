@@ -41,28 +41,32 @@ function Canvas({ cellsData, handleCellClick, rows, columns }: { cellsData: Cell
     )
 }
 
+
+const supportedLetters = ["F", "Ι", "L", "N", "P", "Τ", "U", "V", "W", "X", "Υ", "Z"]
+const letterColors = [
+    "#001fc4",
+    "#9c1516",
+    "#efee29",
+    "#e719e2",
+    "#07d4f3",
+    "#8a8a8a",
+    "#00e53f",
+    "#f19a05",
+    "#d5d5d5",
+    "#2097b8",
+    "#b82082",
+    "#ff0011",
+]
+
 export function Cell({ size = 20, bgcolor = "white", isRemovedForHole, holeColor, letter, index, handleCellClick }: CellData & { holeColor: string, handleCellClick: (index: number) => void }) {
     const [isRemoved, setIsRemoved] = useState<boolean | null>(isRemovedForHole)
-    const supportedLetters = ["F", "I", "L", "N", "P", "T", "U", "V", "W", "X", "Y", "Z"]
-    const letterColors = [
-        "#001fc4",
-        "#9c1516",
-        "#efee29",
-        "#e719e2",
-        "#07d4f3",
-        "#8a8a8a",
-        "#00e53f",
-        "#f19a05",
-        "#d5d5d5",
-        "#2097b8",
-        "b82082",
-        "#ff0011",
-    ]
+
     let the_index = -1;
     for (let i = 0; i < supportedLetters.length; i++) {
         if (letter === supportedLetters[i]) {
             console.log("letter is: ", letter, "and color is: ", letterColors[i])
             the_index = i;
+            break;
         }
     }
 
