@@ -12,15 +12,10 @@ const size = 20;
 
 function DisplaySolution({ cellsData, rows, columns }: { cellsData: CellData[], rows: number, columns: number }) {
 
-    const solution = "FFFFF FFFFF FFFFF FFFFF FFFFF"
-
-    console.log("HERE", rows, columns)
-
-
-
-
     return (
-        <div style={{ padding: "1rem" }}><Canvas cellsData={cellsData} holeColor='yellow' handleCellClick={(e) => console.log("nothing")} columns={columns} rows={rows} /></div >
+        <div style={{ padding: "1rem" }}>
+            <Canvas cellsData={cellsData} holeColor='yellow' handleCellClick={(e) => console.log("nothing")} columns={columns} rows={rows} />
+        </div >
     )
 }
 

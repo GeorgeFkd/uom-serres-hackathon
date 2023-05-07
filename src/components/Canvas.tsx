@@ -42,7 +42,7 @@ function Canvas({ cellsData, handleCellClick, rows, columns }: { cellsData: Cell
 }
 
 
-const supportedLetters = ["F", "Ι", "L", "N", "P", "Τ", "U", "V", "W", "X", "Υ", "Z"]
+const supportedLetters = ["F", "I", "L", "N", "P", "T", "U", "V", "W", "X", "Y", "Z"]
 const letterColors = [
     "#001fc4",
     "#9c1516",
@@ -78,7 +78,7 @@ export function Cell({ size = 20, bgcolor = "white", isRemovedForHole, holeColor
     }
 
     // const theBgColorIfLetter = index === -1 ? 'white' : supportedLetters[the_index]
-    console.log("This is: ", letter, "painted with color: ", theBgColorIfLetter)
+    // console.log("This is: ", letter, "painted with color: ", theBgColorIfLetter)
     return (
         <div style={{
             fontSize: size / 2,

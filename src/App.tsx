@@ -7,6 +7,9 @@ import DisplaySolution from './components/DisplaySolution'
 import BlankCanvas from './components/BlankCanvas'
 import ChooseLetters from './components/ChooseLetters'
 import ShowSelectedLetters from './components/ShowSelectedLetters'
+import SaveConfiguration from './components/SaveConfiguration.jsx'
+import DownloadSolution from './components/DownloadSolution'
+import LoadConfiguration from './components/LoadConfiguration'
 
 type CellData = {
   size: number,
@@ -16,7 +19,7 @@ type CellData = {
   letter: string,
 }
 
-let api_port = "5000"
+let api_port = "8000"
 let api_route = "solve"
 function App() {
   const [rows, setRows] = useState(5)
@@ -25,6 +28,8 @@ function App() {
   const [letterList, setLetterList] = useState<string[]>([])
   const [holes, setHoles] = useState<number[]>([])
   const [result, setResult] = useState<CellData[]>([])
+  const [time, setTime] = useState<string>("")
+  const [isRotated, setIsRotated] = useState<boolean>(false)
   const handleCellClick = (index: number) => {
     console.log("cell clicked", index)
     if (holes.includes(index)) {
@@ -34,57 +39,19 @@ function App() {
     }
   }
 
-  const cellsData: CellData[] = [
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: true,
-      index: 0,
-      letter: "W"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: false,
-      index: 1,
-      letter: "V"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: true,
-      index: 2,
-      letter: "N"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: false,
-      index: 3,
-      letter: "L"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: false,
-      index: 3,
-      letter: "Z"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: false,
-      index: 3,
-      letter: "I"
-    },
-    {
-      size: pixels,
-      bgcolor: "red",
-      isRemovedForHole: false,
-      index: 3,
-      letter: "T"
-    },
-  ]
+  const configData = {
+    rows: rows,
+    columns: columns,
+    letterList: letterList,
+    holes: holes,
+    isRotated: isRotated
+  }
+
+  const configString = JSON.stringify(configData)
+
+
+
+
 
   const sendRequest = async () => {
     console.log("send request")
@@ -100,27 +67,29 @@ function App() {
     }
 
 
-    // console.log("holes_coordinates", holes_coordinates)
+    console.log("holes_coordinates", holes_coordinates)
     const data = {
       rows: rows,
       columns: columns,
       letterList: letterList,
-      holes
+      holes,
+      isRotated: isRotated
     }
 
-    const response = await fetch("https://api.github.com", {
+    const response = await fetch(`http://localhost:${api_port}/${api_route}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(data),
     })
 
     // console.log("response", response)
-    const resultOfSolution = await response.json()
-    const dummy = "FFLLI YFFLI ΥFTLI ΥΥTLI ΥΤΤΤI"
-    //convert this to cell data
-    const total_result = Array.from(dummy.replace(/ /g, "")).map((letter, index) => {
+    const result = await response.json()
+    console.log(result)
+    const solution = result.solution as string;
+    const total_result = Array.from(solution.replace(/ /g, "")).map((letter, index) => {
       return {
         size: pixels,
         bgcolor: "red",
@@ -129,13 +98,26 @@ function App() {
         letter: letter
       }
     })
+
     console.log("TOTAL RESULT IS", total_result)
 
     setResult(total_result)
+    setTime(result.time)
     // update state with response
 
     // console.log("data", data)
   }
+
+  const handleLoadConfiguration = (e: string) => {
+    console.log("handleLoadConfiguration", e)
+    const data = JSON.parse(e)
+    setRows(data.rows)
+    setColumns(data.columns)
+    setLetterList(data.letterList)
+    setHoles(data.holes)
+    setIsRotated(data.isRotated)
+  }
+
 
 
   return (
@@ -146,8 +128,21 @@ function App() {
       <ChooseLetters letterList={letterList} setLetterList={setLetterList} />
       <ShowSelectedLetters letterList={letterList} />
       <br />
+      <label style={{ marginLeft: "1rem" }}>
+        Rotate Letters
+        <input type="checkbox" checked={isRotated} onChange={(e) => setIsRotated(!isRotated)} />
+      </label>
+      <br />
+      <SaveConfiguration configurationText={configString} />
+      <LoadConfiguration onClick={handleLoadConfiguration} />
       <SolveButton onClick={(e) => sendRequest()} />
+      <br />
+      <span style={{ fontSize: "1.4rem" }}>{time && "Found Solution in time: " + time + "ms"}</span>
+      <br />
       <DisplaySolution cellsData={result} columns={columns} rows={rows} />
+      <br />
+      <DownloadSolution results={result} />
+      <br />
     </div>
   )
 }
